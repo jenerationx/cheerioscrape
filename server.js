@@ -42,9 +42,13 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
 app.get("/", function (req, res) {
-  res.render("index", {
-    title: "Mongo Runners"
-  });
+  db.Article.find({})
+    .then(function (dbArticle) {
+      res.render("index", {
+        title: "Mongo Runners",
+        articles: dbArticle
+      });
+    });
 });
 
 // A GET route for scraping the echoJS website
@@ -55,19 +59,24 @@ app.get("/scrape", function (req, res) {
     var $ = cheerio.load(response.data);
 
     // Now, we grab every item-title within an article tag, and do the following:
-    $("a.item-title").each(function (i, element) {
+    $("div.simple-item").each(function (i, element) {
       // Save an empty result object
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this)
-        .text();
-      result.link = $(this)
-        .attr("href");
+        .children("a.item-title").text()
+      result.link = "www.runnersworld.com/" + $(this)
+        .children("a.item-title").attr("href");
+      result.summary = $(this)
+        .children("div.item-dek").children("p").text();
+      result.imageLink = $(this)
+        .children("a.simple-item-image").children("picture.lazyimage").children("source").attr("data-srcset");
       console.log(result);
       // Create a new Article using the `result` object built from scraping
-      db.Article.create(result)
+      db.Article.create(result, { unique: true })
         .then(function (dbArticle) {
+          
           // View the added result in the console
           console.log(dbArticle);
         })

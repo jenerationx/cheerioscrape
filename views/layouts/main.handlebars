@@ -6,11 +6,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/css?family=Libre+Baskerville" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
+<link href="https://fonts.googleapis.com/css?family=Chonburi|Volkhov&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles/styles.css" media="screen" title="no title" charset="utf-8">
   <title>{{ title }}</title>
 </head>
 
 <body>
+  <div id="navbar">
+  <nav>
+    <div class="nav-wrapper #263238 blue-grey darken-4">
+      <a href="/" class="brand-logo"> Mongo Runners</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a class="waves-effect waves-light amber btn">Scrape Articles</a></li>
+        <li><a class="waves-effect waves-light amber btn">Clear Articles</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/saved">Saved Articles</a></li>
+      </ul>
+    </div>
+  </nav>
+  <ul class="sidenav" id="mobile-demo">
+    <li><a href="/">Home</a></li>
+    <li><a href="/saved">Saved Articles</a></li>
+  </ul>
   {{{body}}}
 </body>
 
@@ -19,3 +37,11 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 <script type="text/javascript" src="app.js"></script>
+<script type="text/javascript">(function($){
+  $(function(){
+
+    $('.sidenav').sidenav();
+    $('.parallax').parallax();
+
+  }); // end of document ready
+})(jQuery); // end of jQuery name space</script>
