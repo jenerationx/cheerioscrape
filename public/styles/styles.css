@@ -2,7 +2,7 @@
     font-family: 'Volkhov', serif;
 }
 p {
-  line-height: 2rem;
+  line-height: 1.75rem;
 }
 
 .sidenav-trigger {
@@ -27,10 +27,10 @@ width: 100%;
     top: 0;
   }
 }
-
 .icon-block {
   padding: 0 15px;
 }
+
 .icon-block .material-icons {
   font-size: inherit;
 }
@@ -38,12 +38,16 @@ width: 100%;
 footer.page-footer {
   margin: 0;
 }
+
 .card{
-    height: 570px;
+    height: 575px;
     overflow: hidden;
 }
-a.card-content {
-    color: rgb(78, 76, 76)!important;
+.saved-card, .article-card{
+  height: 200px;
+}
+.saved-img, .article-img{
+  height: 200px;
 }
 a:hover {
 color: darkgray !important;

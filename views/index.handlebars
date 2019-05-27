@@ -1,40 +1,38 @@
 <div id="index-banner" class="parallax-container">
   <div class="section no-pad-bot">
     <div class="container">
-      <br><br>
-      <h1 class="white-text row center">{{title}}</h1>
+      <br><br><br>
+      <h1 class="white-text center">{{title}}</h1>
       <div class="white-text center">
         <h4>Runner's World Top Headlines</h4>
       </div>
       <br><br>
-
     </div>
   </div>
-  <div class="parallax"><img src="../images/runnergirl.jpg" alt="Unsplashed background img 1"></div>
+  <div class="parallax"><img src="../images/runnergirl.jpg" alt="runner girl"></div>
 </div>
-
 <br>
 <div class="container">
   <div id="wrapper">
     <div class="row">
       {{#each articles}}
-      <div class="col s4">
-        <div class="card">
-          <div class="card-image">
-            <img class="article-img" src="{{ this.imageLink }}">
+      <div class="col s12">
+        <div class="card article-card">
+          <div class="row">
+              <img class="article-img left" src="{{ this.imageLink }}">
+            <div class="card-content center-align">
+              <a class="blue-grey-text" href="https://{{this.link}}">
+                <p>{{ this.title }}</p>
+              </a>
+              <br>
+              <p class="center-block overflow-hidden">{{ this.summary }}</p>
+            </div>
+            <div class="center-align">
+              <a class="waves-effect waves-light amber btn save" data-id="{{this._id}}">Save Article</a></div>
           </div>
-          <div class="card-content">
-            <a class="blue-grey-text"href="https://{{this.link}}">
-              <p>{{ this.title }}</p>
-            </a>
-            <hr>
-            <p class="center-block">{{ this.summary }}</p>
-          </div>
-        </div>
+        </div></div>
+        {{/each}}
       </div>
-      {{/each}}
-    </div>
-
-    <div id="notes"></div>
+    
   </div>
 </div>

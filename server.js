@@ -50,8 +50,18 @@ app.get("/", function (req, res) {
       });
     });
 });
+app.get("/saved", function (req, res) {
+  db.Article.find({})
+    .then(function (dbArticle) {
+      res.render("saved", {
+        title: "Saved Articles",
+        articles: dbArticle
+      });
+    });
+});
+app.get("/notes");
 
-// A GET route for scraping the echoJS website
+// A GET route for scraping the website
 app.get("/scrape", function (req, res) {
   // First, we grab the body of the html with axios
   axios.get("http://www.runnersworld.com/").then(function (response) {
@@ -87,12 +97,73 @@ app.get("/scrape", function (req, res) {
     });
     // Send a message to the client
     res.send("Scrape Complete");
-
   });
 });
 
+//Route to save an article
+app.get("/save/:id", function(req, res) {
+
+  // Update a doc in the Article collection with an ObjectId matching
+  // the id parameter in the url
+  db.Article.update(
+    {
+      _id: req.params.id
+    },
+    {
+      // Set "saved" to true for the article we specified
+      $set: {
+        saved: true
+      }
+    },
+    // When that's done, run this function
+    function(error, edited) {
+      // show any errors
+      if (error) {
+        console.log(error);
+        res.send(error);
+      }
+      else {
+        // Otherwise, send the result of our update to the browser
+        console.log(edited);
+        res.send(edited);
+      }
+    }
+  );
+});
+
+//Route to un-save an article
+app.get("/unsave/:id", function(req, res) {
+
+  // Update a doc in the Article collection with an ObjectId matching
+  // the id parameter in the url
+  db.Article.update(
+    {
+      _id: req.params.id
+    },
+    {
+      // Set "saved" to true for the article we specified
+      $set: {
+        saved: false
+      }
+    },
+    // When that's done, run this function
+    function(error, edited) {
+      // show any errors
+      if (error) {
+        console.log(error);
+        res.send(error);
+      }
+      else {
+        // Otherwise, send the result of our update to the browser
+        console.log(edited);
+        res.send(edited);
+      }
+    }
+  );
+});
+
 // Route for getting all Articles from the db
-app.get("/articles", function (req, res) {
+app.get("/api/articles", function (req, res) {
   // Grab every document in the Articles collection
   db.Article.find({})
     .then(function (dbArticle) {
@@ -105,8 +176,8 @@ app.get("/articles", function (req, res) {
     });
 });
 
-// Route for grabbing a specific Article by id, populate it with it's note
-app.get("/articles/:id", function (req, res) {
+// Route for grabbing a specific Article by id, populate it with its note
+app.get("/api/articles/:id", function (req, res) {
   // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
   db.Article.findOne({ _id: req.params.id })
     // ..and populate all of the notes associated with it
@@ -122,7 +193,7 @@ app.get("/articles/:id", function (req, res) {
 });
 
 // Route for saving/updating an Article's associated Note
-app.post("/articles/:id", function (req, res) {
+app.post("/api/articles/:id", function (req, res) {
   // Create a new note and pass the req.body to the entry
   db.Note.create(req.body)
     .then(function (dbNote) {
@@ -140,6 +211,10 @@ app.post("/articles/:id", function (req, res) {
       res.json(err);
     });
 });
+  // Render 404 page for any unmatched routes
+  // app.get("*", function (req, res) {
+  //   res.render("404");
+  // });
 
 // Start the server
 app.listen(PORT, function () {

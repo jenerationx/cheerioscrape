@@ -1,0 +1,47 @@
+    <div class="container">
+        <h1 class="center">{{title}}</h1>
+    </div>
+<br>
+<div class="container">
+    <div id="wrapper">
+        <div class="row">
+            {{#each articles}}
+            {{#if saved}}
+            <div class="col s12">
+                <div class="card saved-card center">
+                    <div class="row">
+                        <img class="saved-img left" src="{{ this.imageLink }}">
+                        <div class="card-content">
+                            <a class="blue-grey-text" href="https://{{this.link}}">
+                                <p>{{ this.title }}</p>
+                                <br>
+                            </a>
+                            <p class="center-block">{{ this.summary }}</p>
+                            <br>
+                            <a class="waves-effect waves-light amber btn unsave" data-id="{{this._id}}">Delete From
+                                Saved</a>
+                            <a class="waves-effect waves-light amber btn note-btn modal-trigger" href="#notes"
+                                data-id="{{this._id}}">Article Notes</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            {{/each}}
+        </div>
+        <div id="notes" class="modal">
+            <h5 class="modal-close">&#10005;</h5>
+            <div class="modal-content center">
+                <h4>Notes</h4>
+                <div action="#">
+                    <br>
+                    <div class="card-content">
+                    {{>notes}}
+                    </div>
+                    <br>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
