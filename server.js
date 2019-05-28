@@ -55,11 +55,18 @@ app.get("/saved", function (req, res) {
     .then(function (dbArticle) {
       res.render("saved", {
         title: "Saved Articles",
-        articles: dbArticle
+        articles: dbArticle,
       });
     });
 });
-app.get("/notes");
+app.get("/notes", function (req, res) {
+  db.Notes.find({})
+    .then(function (dbArticle) {
+      res.render("notes", {
+        notes: dbNotes
+      });
+    });
+});
 
 // A GET route for scraping the website
 app.get("/scrape", function (req, res) {
@@ -86,7 +93,7 @@ app.get("/scrape", function (req, res) {
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result, { unique: true })
         .then(function (dbArticle) {
-          
+
           // View the added result in the console
           console.log(dbArticle);
         })
@@ -101,7 +108,7 @@ app.get("/scrape", function (req, res) {
 });
 
 //Route to save an article
-app.get("/save/:id", function(req, res) {
+app.get("/save/:id", function (req, res) {
 
   // Update a doc in the Article collection with an ObjectId matching
   // the id parameter in the url
@@ -116,7 +123,7 @@ app.get("/save/:id", function(req, res) {
       }
     },
     // When that's done, run this function
-    function(error, edited) {
+    function (error, edited) {
       // show any errors
       if (error) {
         console.log(error);
@@ -132,7 +139,7 @@ app.get("/save/:id", function(req, res) {
 });
 
 //Route to un-save an article
-app.get("/unsave/:id", function(req, res) {
+app.get("/unsave/:id", function (req, res) {
 
   // Update a doc in the Article collection with an ObjectId matching
   // the id parameter in the url
@@ -147,7 +154,7 @@ app.get("/unsave/:id", function(req, res) {
       }
     },
     // When that's done, run this function
-    function(error, edited) {
+    function (error, edited) {
       // show any errors
       if (error) {
         console.log(error);
@@ -211,10 +218,45 @@ app.post("/api/articles/:id", function (req, res) {
       res.json(err);
     });
 });
-  // Render 404 page for any unmatched routes
-  // app.get("*", function (req, res) {
-  //   res.render("404");
-  // });
+// Route for getting all Notes from the db
+app.get("/api/notes", function (req, res) {
+  // Grab every document in the Articles collection
+  db.Note.find({})
+    .then(function (dbNote) {
+      // If we were able to successfully find Articles, send them back to the client
+      res.json(dbNote);
+    })
+    .catch(function (err) {
+      // If an error occurred, send it to the client
+      res.json(err);
+    });
+});
+app.get("/delete/:id", function(req, res) {
+  // Remove a note using the objectID
+  db.Note.remove(
+    {
+      _id: req.params.id
+    },
+    function(error, removed) {
+      // Log any errors from mongojs
+      if (error) {
+        console.log(error);
+        res.send(error);
+      }
+      else {
+        // Otherwise, send the mongojs response to the browser
+        // This will fire off the success function of the ajax request
+        console.log(removed);
+        res.send(removed);
+      }
+    }
+  );
+});
+
+// Render 404 page for any unmatched routes
+// app.get("*", function (req, res) {
+//   res.render("404");
+// });
 
 // Start the server
 app.listen(PORT, function () {

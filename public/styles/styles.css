@@ -4,7 +4,10 @@
 p {
   line-height: 1.75rem;
 }
+body{
+  background-color: rgb(241, 239, 239);
 
+}
 .sidenav-trigger {
   color: #26a69a;
 }
@@ -51,4 +54,7 @@ footer.page-footer {
 }
 a:hover {
 color: darkgray !important;
+}
+#notes{
+  padding: 25px;
 }

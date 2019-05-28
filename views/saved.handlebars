@@ -1,6 +1,6 @@
-    <div class="container">
-        <h1 class="center">{{title}}</h1>
-    </div>
+<div class="container">
+    <h1 class="center">{{title}}</h1>
+</div>
 <br>
 <div class="container">
     <div id="wrapper">
@@ -34,14 +34,18 @@
             <div class="modal-content center">
                 <h4>Notes</h4>
                 <div action="#">
-                    <br>
+                    <ul class="collection">
+                    </ul>
+
                     <div class="card-content">
-                    {{>notes}}
+                        <div class="row">
+
+                            {{> notes }}
+                        </div>
                     </div>
-                    <br>
                 </div>
             </div>
         </div>
-
     </div>
+</div>
 </div>
