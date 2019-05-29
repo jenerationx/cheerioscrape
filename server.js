@@ -61,7 +61,7 @@ app.get("/saved", function (req, res) {
 });
 app.get("/notes", function (req, res) {
   db.Notes.find({})
-    .then(function (dbArticle) {
+    .then(function (dbNotes) {
       res.render("notes", {
         notes: dbNotes
       });
@@ -218,6 +218,7 @@ app.post("/api/articles/:id", function (req, res) {
       res.json(err);
     });
 });
+
 // Route for getting all Notes from the db
 app.get("/api/notes", function (req, res) {
   // Grab every document in the Articles collection
@@ -233,7 +234,7 @@ app.get("/api/notes", function (req, res) {
 });
 app.get("/delete/:id", function(req, res) {
   // Remove a note using the objectID
-  db.Note.remove(
+  db.Note.findOneAndRemove(
     {
       _id: req.params.id
     },

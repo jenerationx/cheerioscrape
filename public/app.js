@@ -41,7 +41,7 @@ $(document).on("click", ".note-btn", function () {
       // A textarea to add a new note body
       $("#notes").append("<textarea class='materialize-textarea' id='note-input' name='body'placeholder='Type your note here'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<a class='btn waves-effect waves-light amber right' data-id='" + data._id + "' id='savenote'>Save Note</a>");
+      $("#notes").append("<a class='btn waves-effect waves-light amber right' data-id='"+ data._id +"' id='savenote'>Save Note</a>");
 
       // If there's a note in the article
       if (data.note) {
@@ -74,19 +74,10 @@ $(document).on("click", "#savenote", function () {
   // Also, remove the values entered in the input and textarea for note entry
   $("#note-input").val("");
 });
-for (var i = 0; i < data.notes.length; i++) {
-  // Constructs an li element to contain our noteText and a delete button
-  currentNote = $("<li class='list-group-item note'>")
-    .text(data.notes[i].noteText)
-    .append($("<button class='btn btn-danger note-delete'>x</button>"));
-  // Store the note id on the delete button for easy access when trying to delete
-  currentNote.children("button").data("_id", data.notes[i]._id);
-  // Adding our currentNote to the notesToRender array
-  notesToRender.push(currentNote);
-}
+
 // When user clicks the delete button for a note
 $(document).on("click", ".delete", function (event) {
-  var thisId = $(this).attr("data-id");
+  var thisId = $(this).attr("data-id").trim();
   $.ajax({
     type: "GET",
     url: "/delete/" + thisId
