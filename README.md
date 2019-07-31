@@ -16,9 +16,9 @@ In this project, I created a web app that lets users view and leave comments on 
 ![Screenshot of Mongo Runners](https://github.com/jenerationx/cheerioscrape/blob/master/public/images/screenshot.png)
 
 ## Technologies Utilized
-- nodeJS
-- express
-- express-handlebars
-- mongoose
-- cheerio
-- axios
+- NodeJS
+- Express
+- Express-handlebars
+- MongoDB/Mongoose
+- Cheerio
+- Axios
