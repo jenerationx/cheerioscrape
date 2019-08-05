@@ -76,19 +76,19 @@ app.get("/scrape", function (req, res) {
     var $ = cheerio.load(response.data);
 
     // Now, we grab every item-title within an article tag, and do the following:
-    $("div.simple-item").each(function (i, element) {
+    $("div.full-item").each(function (i, element) {
       // Save an empty result object
       var result = {};
 
       // Add the text and href of every link, and save them as properties of the result object
       result.title = $(this)
-        .children("a.item-title").text()
+        .children("div.full-item-content").children("a.full-item-title").text()
       result.link = "www.runnersworld.com/" + $(this)
-        .children("a.item-title").attr("href");
+        .children("div.full-item-content").children("a.full-item-title").attr("href");
       result.summary = $(this)
-        .children("div.item-dek").children("p").text();
+        .children("div.full-item-content").children("div.full-item-dek").children("p").text();
       result.imageLink = $(this)
-        .children("a.simple-item-image").children("picture.lazyimage").children("source").attr("data-srcset");
+        .children("a.full-item-image").children("img.lazyimage").attr("data-src");
       console.log(result);
       // Create a new Article using the `result` object built from scraping
       db.Article.create(result, { unique: true })
