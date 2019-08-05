@@ -1,4 +1,4 @@
-$(document).on("click", "#scrape", function () {
+$(document).on("click", ".scrape", function () {
   // This function handles the user clicking "scrape new articles" button
   $.get("/scrape").then(function () {
     location.reload();

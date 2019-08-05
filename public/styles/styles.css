@@ -43,14 +43,15 @@ footer.page-footer {
 }
 
 .card{
-    height: 580px;
     overflow: hidden;
 }
 .saved-card, .article-card{
-  height: 200px;
+  height: 225px;
 }
 .saved-img, .article-img{
-  height: 200px;
+  height: 225px;
+  width: 300px;
+  object-fit: cover;
 }
 a:hover {
 color: darkgray !important;

@@ -42,7 +42,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 
 // Routes
 app.get("/", function (req, res) {
-  db.Article.find({})
+  db.Article.find({ saved: false })
     .then(function (dbArticle) {
       res.render("index", {
         title: "Mongo Runners",
@@ -50,6 +50,7 @@ app.get("/", function (req, res) {
       });
     });
 });
+
 app.get("/saved", function (req, res) {
   db.Article.find({})
     .then(function (dbArticle) {
@@ -232,13 +233,13 @@ app.get("/api/notes", function (req, res) {
       res.json(err);
     });
 });
-app.get("/delete/:id", function(req, res) {
+app.get("/delete/:id", function (req, res) {
   // Remove a note using the objectID
   db.Note.findOneAndRemove(
     {
       _id: req.params.id
     },
-    function(error, removed) {
+    function (error, removed) {
       // Log any errors from mongojs
       if (error) {
         console.log(error);
@@ -253,7 +254,15 @@ app.get("/delete/:id", function(req, res) {
     }
   );
 });
-
+// app.get("/delete/", function (req, res) {
+//   db.Article.remove({})
+//     .then(function () {
+//       return db.Article.remove({});
+//     })
+//     .then(function () {
+//       res.json({ ok: true });
+//     });
+// })
 // Render 404 page for any unmatched routes
 // app.get("*", function (req, res) {
 //   res.render("404");
