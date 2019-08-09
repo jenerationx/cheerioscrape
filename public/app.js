@@ -4,6 +4,7 @@ $(document).on("click", ".scrape", function () {
     location.reload();
   });
 });
+//This function handles the user clicking the "save article" button
 $(document).on("click", ".save", function (event) {
   M.toast({ html: 'Article saved!' });
   var thisId = $(this).attr("data-id");
@@ -12,7 +13,7 @@ $(document).on("click", ".save", function (event) {
     url: "/save/" + thisId
   });
 });
-
+//This function handles the user clicking the "delete article" button
 $(document).on("click", ".unsave", function (event) {
   var thisId = $(this).attr("data-id");
   $.ajax({
@@ -36,18 +37,20 @@ $(document).on("click", ".note-btn", function () {
     // With that done, add the note information to the page
     .then(function (data) {
       console.log(data);
+      $("#notes-card").empty();
+      $(".collection").empty();
       // The title of the article
-      $("#notes").append("<h5>" + data.title + "</h5>");
+      $("#notes-card").append("<h5>" + data.title + "</h5>");
       // A textarea to add a new note body
-      $("#notes").append("<textarea class='materialize-textarea' id='note-input' name='body'placeholder='Type your note here'></textarea>");
+      $("#notes-card").append("<textarea class='materialize-textarea' id='note-input' name='body'placeholder='Type your note here'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<a class='btn waves-effect waves-light amber right' data-id='"+ data._id +"' id='savenote'>Save Note</a>");
+      $("#notes-card").append("<a class='btn waves-effect waves-light amber right' data-id='"+ data._id +"' id='savenote'>Save Note</a>");
 
       // If there's a note in the article
       if (data.note) {
 
         // Place the body of the note in 
-        $(".collection").append("<li class='list-item'><span>" + data.note.body + "</span><a class='btn waves-effect waves-light amber right delete' data-id=' " + data.note._id + "'>Delete Note</a></li>")
+        $(".collection").append("<li class='collection-item'><span>" + data.note.body + "</span><a class='btn waves-effect waves-light amber right delete' data-id=' " + data.note._id + "'>Delete Note</a></li>")
       }
     });
 });
@@ -73,6 +76,8 @@ $(document).on("click", "#savenote", function () {
 
   // Also, remove the values entered in the input and textarea for note entry
   $("#note-input").val("");
+  location.reload();
+
 });
 
 // When user clicks the delete button for a note
