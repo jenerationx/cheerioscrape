@@ -28,9 +28,20 @@
             </div>
             {{/if}}
             {{/each}}
+              {{#unless saved}}
+            <div id="no-articles" class="card">
+                <div class="card-content">
+                    <div class="card-title">There are no saved articles yet.</div>
+
+                    <a href="/">
+                        Return Home to Save some Articles
+                    </a>
+                </div>
+            </div>
+            {{/unless}}
         </div>
         <div id="notes" class="modal">
-            <h5 class="modal-close">&#10005;</h5>
+            <h5 class="modal-close right">&#10005;</h5>
             <div class="modal-content center">
                 <h4>Notes</h4>
                 <div action="#">
