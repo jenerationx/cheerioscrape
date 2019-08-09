@@ -88,6 +88,6 @@ $(document).on("click", ".delete", function (event) {
     url: "/delete/" + thisId
   }).then(function (data) {
     console.log(data);
-    $(".list-item").html("");
+    $(".collection-item").html("");
   })
 });
